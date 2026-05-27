@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LaundryPro — Laundry Shop Management System</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="layout">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">🧺</div>
+        <div>
+          <div class="logo-title">LaundryPro</div>
+          <div class="logo-sub">Management System</div>
+        </div>
+        <button class="sidebar-close" onclick="toggleSidebar()" id="sidebarClose">✕</button>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" onclick="showPage('dashboard', this)"><span class="nav-icon">📊</span> Dashboard</a>
+        <a href="#" class="nav-item" onclick="showPage('pos', this)"><span class="nav-icon">🛒</span> POS Terminal <span class="nav-badge live">Live</span></a>
+        <a href="#" class="nav-item" onclick="showPage('orders', this)"><span class="nav-icon">📋</span> Orders <span class="nav-badge">12</span></a>
+        <a href="#" class="nav-item" onclick="showPage('delivery', this)"><span class="nav-icon">🚚</span> Delivery</a>
+        <a href="#" class="nav-item" onclick="showPage('inventory', this)"><span class="nav-icon">📦</span> Inventory</a>
+        <a href="#" class="nav-item" onclick="showPage('customers', this)"><span class="nav-icon">👥</span> Customers</a>
+        <a href="#" class="nav-item" onclick="showPage('staff', this)"><span class="nav-icon">👤</span> Staff</a>
+        <a href="#" class="nav-item" onclick="showPage('payroll', this)"><span class="nav-icon">💰</span> Payroll</a>
+        <a href="#" class="nav-item" onclick="showPage('reports', this)"><span class="nav-icon">📈</span> Reports</a>
+        <a href="#" class="nav-item" onclick="showPage('settings', this)"><span class="nav-icon">⚙️</span> Settings</a>
+      </nav>
+      <div class="sidebar-user">
+        <div class="user-avatar">OW</div>
+        <div>
+          <div class="user-name">Owner</div>
+          <div class="user-email">admin@laundrypro.ph</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="main">
+      <header class="topbar">
+        <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+        <div style="flex:1"></div>
+        <button class="notif-btn">🔔 <span class="notif-dot"></span></button>
+        <div class="topbar-date" id="topbarDate"></div>
+      </header>
+
+      <main class="content">
+        <!-- DASHBOARD -->
+        <div id="page-dashboard" class="page active">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Dashboard</h1>
+              <p class="page-sub" id="dashDate"></p>
+            </div>
+            <button class="btn-primary" onclick="showPage('pos', document.querySelector('.nav-item:nth-child(2)'))">+ New Order</button>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-info">
+                <div class="stat-label">Revenue Today</div>
+                <div class="stat-value">₱4,280</div>
+                <div class="stat-change positive">+12% vs yesterday</div>
+              </div>
+              <div class="stat-icon" style="background:#d1fae5;color:#059669">📈</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-info">
+                <div class="stat-label">Orders Today</div>
+                <div class="stat-value">34</div>
+                <div class="stat-change positive">+8% vs yesterday</div>
+              </div>
+              <div class="stat-icon" style="background:#dbeafe;color:#2563eb">🛍️</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-info">
+                <div class="stat-label">In Progress</div>
+                <div class="stat-value">12</div>
+              </div>
+              <div class="stat-icon" style="background:#fef3c7;color:#d97706">⏳</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-info">
+                <div class="stat-label">For Pickup</div>
+                <div class="stat-value">7</div>
+              </div>
+              <div class="stat-icon" style="background:#ede9fe;color:#7c3aed">✅</div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">Recent Orders</div>
+                <button class="btn-ghost" onclick="showPage('orders', document.querySelector('.nav-item:nth-child(3)'))">View All →</button>
+              </div>
+              <div class="order-list" id="recentOrdersList"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:16px">
+              <div class="card">
+                <div class="card-header"><div class="card-title">🕐 Queue Status</div></div>
+                <div class="queue-list">
+                  <div class="queue-item"><span>Machine 1 — Wash</span><div class="progress-bar"><div class="progress-fill" style="width:80%;background:#3b82f6"></div></div><span>80%</span></div>
+                  <div class="queue-item"><span>Machine 2 — Dry</span><div class="progress-bar"><div class="progress-fill" style="width:55%;background:#8b5cf6"></div></div><span>55%</span></div>
+                  <div class="queue-item"><span>Machine 3 — Iron</span><div class="progress-bar"><div class="progress-fill" style="width:30%;background:#10b981"></div></div><span>30%</span></div>
+                  <div class="queue-item"><span>Delivery Route A</span><div class="progress-bar"><div class="progress-fill" style="width:65%;background:#f59e0b"></div></div><span>65%</span></div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header"><div class="card-title">⚠️ Low Stock Alerts</div></div>
+                <div class="alert-list">
+                  <div class="alert-item"><div><div class="alert-name">Detergent (5kg sack)</div><div class="alert-sub">Reorder at 5 pcs</div></div><span class="badge badge-red">2 pcs</span></div>
+                  <div class="alert-item"><div><div class="alert-name">Fabric Softener 1L</div><div class="alert-sub">Reorder at 10 btl</div></div><span class="badge badge-red">3 btl</span></div>
+                  <div class="alert-item"><div><div class="alert-name">Plastic Bags (pack)</div><div class="alert-sub">Reorder at 5 pck</div></div><span class="badge badge-red">1 pck</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- POS -->
+        <div id="page-pos" class="page">
+          <div class="page-header">
+            <h1 class="page-title">POS Terminal <span class="badge badge-green">● Live</span></h1>
+          </div>
+          <div class="pos-layout">
+            <div class="pos-left">
+              <div class="category-tabs" id="categoryTabs"></div>
+              <div class="services-grid" id="servicesGrid"></div>
+            </div>
+            <div class="pos-right">
+              <div class="card">
+                <div class="card-title" style="margin-bottom:12px">👤 Customer Info</div>
+                <input class="input" id="posCustomerName" placeholder="Customer name" />
+                <input class="input" id="posCustomerPhone" placeholder="Phone number" style="margin-top:8px" />
+              </div>
+              <div class="card" style="margin-top:12px">
+                <div class="card-header">
+                  <div class="card-title">Order Summary</div>
+                  <span class="badge" id="cartCount">0 items</span>
+                </div>
+                <div class="cart-items" id="cartItems"><div class="empty-cart">🛒<br/>Tap a service to add</div></div>
+              </div>
+              <div class="card" style="margin-top:12px">
+                <div class="totals">
+                  <div class="total-row"><span>Subtotal</span><span id="posSubtotal">₱0.00</span></div>
+                  <div class="total-row"><span>Discount ₱</span><input class="input-inline" id="posDiscount" value="0" oninput="updateTotals()" /></div>
+                  <div class="divider"></div>
+                  <div class="total-row total-final"><span>TOTAL</span><span id="posTotal">₱0.00</span></div>
+                </div>
+                <div class="payment-methods" id="paymentMethods"></div>
+                <div id="cashSection" style="margin-top:8px">
+                  <input class="input" id="cashReceived" placeholder="Cash received" type="number" oninput="updateChange()" />
+                  <div class="change-display" id="changeDisplay"></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+                  <button class="btn-outline" onclick="printReceipt()">🖨️ Receipt</button>
+                  <button class="btn-primary" onclick="checkout()">Checkout</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ORDERS -->
+        <div id="page-orders" class="page">
+          <div class="page-header">
+            <h1 class="page-title">Order Queue</h1>
+            <div style="display:flex;gap:8px;align-items:center">
+              <input class="input" style="width:220px" id="orderSearch" placeholder="🔍 Search orders..." oninput="renderOrders()" />
+              <div class="view-toggle">
+                <button id="btnKanban" class="view-btn active" onclick="setView('kanban')">Kanban</button>
+                <button id="btnList" class="view-btn" onclick="setView('list')">List</button>
+              </div>
+            </div>
+          </div>
+          <div id="kanbanView"></div>
+          <div id="listView" style="display:none"></div>
+        </div>
+
+        <!-- DELIVERY -->
+        <div id="page-delivery" class="page">
+          <div class="page-header"><h1 class="page-title">Pickup & Delivery</h1></div>
+          <div class="stats-grid">
+            <div class="stat-card"><div class="stat-info"><div class="stat-label">Out for Delivery</div><div class="stat-value">3</div></div><div class="stat-icon" style="background:#ede9fe;color:#7c3aed">🚚</div></div>
+            <div class="stat-card"><div class="stat-info"><div class="stat-label">For Pickup</div><div class="stat-value">7</div></div><div class="stat-icon" style="background:#d1fae5;color:#059669">📦</div></div>
+            <div class="stat-card"><div class="stat-info"><div class="stat-label">Delivered Today</div><div class="stat-value">11</div></div><div class="stat-icon" style="background:#dbeafe;color:#2563eb">✅</div></div>
+            <div class="stat-card"><div class="stat-info"><div class="stat-label">Pending Pickup</div><div class="stat-value">4</div></div><div class="stat-icon" style="background:#fef3c7;color:#d97706">⏳</div></div>
+          </div>
+          <div class="card" style="margin-top:20px">
+            <div class="card-title" style="margin-bottom:16px">Active Deliveries</div>
+            <table class="data-table">
+              <thead><tr><th>Order #</th><th>Customer</th><th>Address</th><th>Driver</th><th>Status</th><th>ETA</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">ORD-0230</td><td>Liza Cruz</td><td>123 Rizal St, QC</td><td>Danny Ramos</td><td><span class="badge" style="background:#ede9fe;color:#7c3aed">Out for Delivery</span></td><td>4:30 PM</td></tr>
+                <tr><td class="mono">ORD-0229</td><td>Carlo Mendoza</td><td>45 Luna Ave, QC</td><td>Danny Ramos</td><td><span class="badge" style="background:#fef3c7;color:#d97706">Pending Pickup</span></td><td>5:00 PM</td></tr>
+                <tr><td class="mono">ORD-0228</td><td>Nena Flores</td><td>88 Mabini Blvd, QC</td><td>Danny Ramos</td><td><span class="badge" style="background:#ede9fe;color:#7c3aed">Out for Delivery</span></td><td>4:45 PM</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- INVENTORY -->
+        <div id="page-inventory" class="page">
+          <div class="page-header"><h1 class="page-title">Inventory</h1><button class="btn-primary" onclick="alert('Add item modal')">+ Add Item</button></div>
+          <div class="card">
+            <table class="data-table">
+              <thead><tr><th>Item</th><th>Category</th><th>Stock</th><th>Unit</th><th>Reorder At</th><th>Cost/Unit</th><th>Status</th></tr></thead>
+              <tbody id="inventoryTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- CUSTOMERS -->
+        <div id="page-customers" class="page">
+          <div class="page-header"><h1 class="page-title">Customers</h1><button class="btn-primary" onclick="alert('Add customer modal')">+ Add Customer</button></div>
+          <div class="card">
+            <input class="input" style="width:100%;margin-bottom:16px" placeholder="🔍 Search customers..." />
+            <table class="data-table">
+              <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Total Orders</th><th>Total Spent</th><th>Loyalty Pts</th><th>Last Visit</th></tr></thead>
+              <tbody id="customersTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- STAFF -->
+        <div id="page-staff" class="page">
+          <div class="page-header">
+            <h1 class="page-title">Staff & Attendance</h1>
+            <div style="display:flex;gap:8px">
+              <span class="badge badge-green">3 Present</span>
+              <span class="badge" style="background:#fef3c7;color:#d97706">1 Late</span>
+              <span class="badge badge-red">1 Absent</span>
+            </div>
+          </div>
+          <div class="staff-list" id="staffList"></div>
+        </div>
+
+        <!-- PAYROLL -->
+        <div id="page-payroll" class="page">
+          <div class="page-header"><h1 class="page-title">Payroll</h1><button class="btn-primary" onclick="alert('Compute payroll')">Compute Payroll</button></div>
+          <div class="card">
+            <table class="data-table">
+              <thead><tr><th>Employee</th><th>Role</th><th>Days Worked</th><th>Daily Rate</th><th>Gross Pay</th><th>SSS</th><th>PhilHealth</th><th>Pag-IBIG</th><th>Net Pay</th><th>Status</th></tr></thead>
+              <tbody id="payrollTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- REPORTS -->
+        <div id="page-reports" class="page">
+          <div class="page-header">
+            <div><h1 class="page-title">Financial Reports</h1><p class="page-sub">May 21–27, 2026</p></div>
+            <div style="display:flex;gap:8px">
+              <div class="view-toggle">
+                <button class="view-btn active">Daily</button>
+                <button class="view-btn">Weekly</button>
+                <button class="view-btn">Monthly</button>
+              </div>
+              <button class="btn-outline">⬇ Export</button>
+            </div>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card"><div class="stat-info"><div class="stat-label">Total Revenue</div><div class="stat-value">₱34,900</div><div class="stat-change positive">+18% this week</div></div><div class="stat-icon" style="background:#d1fae5;color:#059669">📈</div></div>
+            <div class="stat-card"><div class="stat-info"><div class="stat-label">Net Income</div><div class="stat-value">₱27,180</div><div class="stat-change positive">+14% this week</div></div><div class="stat-icon" style="background:#dbeafe;color:#2563eb">💰</div></div>
+            <div class="stat-card"><div class="stat-info"><div class="stat-label">Total Expenses</div><div class="stat-value">₱7,720</div><div class="stat-change" style="color:#ef4444">+5% this week</div></div><div class="stat-icon" style="background:#fee2e2;color:#dc2626">📉</div></div>
+            <div class="stat-card"><div class="stat-info"><div class="stat-label">Total Orders</div><div class="stat-value">299</div><div class="stat-change positive">+22% this week</div></div><div class="stat-icon" style="background:#ede9fe;color:#7c3aed">🛍️</div></div>
+          </div>
+          <div class="dashboard-grid" style="margin-top:20px">
+            <div class="card">
+              <div class="card-title" style="margin-bottom:16px">📊 Revenue vs Expenses (This Week)</div>
+              <canvas id="revenueChart" height="200"></canvas>
+            </div>
+            <div class="card">
+              <div class="card-title" style="margin-bottom:16px">🥧 Service Breakdown</div>
+              <canvas id="serviceChart" height="200"></canvas>
+            </div>
+          </div>
+          <div class="dashboard-grid" style="margin-top:16px">
+            <div class="card">
+              <div class="card-title" style="margin-bottom:16px">🏆 Top Customers</div>
+              <div id="topCustomers"></div>
+            </div>
+            <div class="card">
+              <div class="card-title" style="margin-bottom:16px">💸 Expense Breakdown</div>
+              <div id="expenseBreakdown"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div id="page-settings" class="page">
+          <div class="page-header"><h1 class="page-title">Settings</h1></div>
+          <div class="dashboard-grid">
+            <div class="card">
+              <div class="card-title" style="margin-bottom:16px">🏪 Shop Information</div>
+              <div class="form-group"><label>Shop Name</label><input class="input" value="LaundryPro" /></div>
+              <div class="form-group"><label>Address</label><input class="input" value="123 Main St, Quezon City" /></div>
+              <div class="form-group"><label>Phone</label><input class="input" value="09XX-XXX-XXXX" /></div>
+              <div class="form-group"><label>Email</label><input class="input" value="admin@laundrypro.ph" /></div>
+              <button class="btn-primary" style="margin-top:8px" onclick="alert('Settings saved!')">Save Changes</button>
+            </div>
+            <div class="card">
+              <div class="card-title" style="margin-bottom:16px">💳 Payment Methods</div>
+              <div class="toggle-item"><span>Cash</span><label class="toggle"><input type="checkbox" checked /><span class="slider"></span></label></div>
+              <div class="toggle-item"><span>GCash</span><label class="toggle"><input type="checkbox" checked /><span class="slider"></span></label></div>
+              <div class="toggle-item"><span>Maya</span><label class="toggle"><input type="checkbox" checked /><span class="slider"></span></label></div>
+              <div class="toggle-item"><span>Credit/Debit Card</span><label class="toggle"><input type="checkbox" /><span class="slider"></span></label></div>
+              <div class="card-title" style="margin:16px 0 12px">🔔 Notifications</div>
+              <div class="toggle-item"><span>SMS Notifications</span><label class="toggle"><input type="checkbox" checked /><span class="slider"></span></label></div>
+              <div class="toggle-item"><span>Email Notifications</span><label class="toggle"><input type="checkbox" /><span class="slider"></span></label></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
