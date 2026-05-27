@@ -87,9 +87,24 @@ let orders = [...ORDERS];
 let currentView = 'kanban';
 let chartsInitialized = false;
 
+// ─── NAVIGATION BINDER ────────────────────────────────────
+function bindNavigation() {
+  document.querySelectorAll('.nav-item[data-page]').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      const page = item.dataset.page;
+      showPage(page, item);
+      if (window.innerWidth <= 768) {
+        document.getElementById('sidebar')?.classList.remove('open');
+      }
+    });
+  });
+}
+
 // ─── INIT ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   setDates();
+  bindNavigation();
   renderRecentOrders();
   renderPOS();
   renderOrders();
